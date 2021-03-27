@@ -1,0 +1,76 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+    gvard:
+    setlocale(LC_ALL, "russian");
+    int n;
+    double g, k = 1;
+    string path = "myFile.txt";
+    int a;
+    //***********МЕНЮ ПРОГРАММЫ*******
+    cout << "***********Меню***********" << endl << "Нажмите 1 для расчёта вероятности" << endl << "Нажмите 2 для чтения файла"<< endl;
+    cin >> a;
+    switch (a)
+    {
+        
+        case 1:
+        {
+            cout << "Введите количество человек в группе" << endl;
+            
+            
+            cin >> n;
+                
+                for (int i = 366 - n; i <= 365; i++)
+                {
+                    k = k * i;
+                    k = k / 365;
+                }
+                g = 100 * (1 - k);
+                cout << g << "%" << endl;
+                k = 1;
+         //********************Запись файла***************************
+                // переменная path хранит путь к нашему файлу
+                ofstream fout;
+                fout.open(path, ofstream::app);
+                if (!fout.is_open())
+                {
+                    cout << "Файл не записан. Ошибка!" << endl; // ошибка
+                }
+                else
+                {
+                    fout << n << endl << g << "%" << endl; //данные записываются
+                }
+                fout.close();
+                cout << "Данные записаны" << endl;
+
+                goto gvard;
+            
+        
+        }
+
+        //***********************ЧТЕНИЕ ФАЙЛА**************************
+        case 2:
+        {
+           
+            ifstream fin;
+            fin.open(path);
+            if (!fin.is_open())
+            {
+                cout << "Файл не открыт. Ошибка!" << endl; // ошибка
+            }
+            else
+            {
+                char ch;
+                while (fin.get(ch))
+                cout << ch;
+            }
+            break;
+        }
+        default:
+            cout << "Введите цифру 1 или 2" << endl;
+            goto gvard;
+    }
+}
